@@ -2,4 +2,4 @@
 #script that displays lines containing the bash word
 #Using your previous exercise command
 
-./1-list_your_processes || grep "bash"
+./1-list_your_processes | grep "bash"
