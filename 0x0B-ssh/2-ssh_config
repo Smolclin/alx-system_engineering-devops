@@ -1,0 +1,4 @@
+#script that share your SSH client configuration
+Host *
+     PasswordAuthentication no
+     IdentifyFile ~/.ssh/school
