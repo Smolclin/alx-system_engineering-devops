@@ -1,5 +1,6 @@
-#sudo apt-get update
-#sudo apt-get install -y ufw
+# ufw is already installed, if not:
+# sudo apt-get update
+# sudo apt-get install -y ufw
 
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
@@ -7,3 +8,5 @@ sudo ufw default allow outgoing
 sudo ufw allow 22/tcp
 sudo ufw allow 443/tcp
 sudo ufw allow 80/tcp
+
+# ufw is enabled with: sudo ufw enable
