@@ -2,7 +2,7 @@
 #script that stops 4-to_infinity_and_beyond process
 
 #program PID
-ps aux | grep  "4-to_infinity_and_beyond"
+id=$(pgrep "bash ./4-to_infinity_and_beyond" -f)
 
 #infinate process termination
 if [ -n "$id" ]
