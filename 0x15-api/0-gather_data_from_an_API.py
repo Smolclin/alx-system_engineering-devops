@@ -1,24 +1,16 @@
 #!/usr/bin/python3
 """ script must accept an integer as a parameter, which is the employee ID """
 
-from requests import get
-from sys import argv
+import requests
+import sys
 
 
 if __name__ == '__main__':
-    main_url = 'https://jsonplaceholder.typicode.com'
-    todo_url = main_url + "/user/{}/todos".format(argv[1])
-    name_url = main_url + "/user/{}".format(argv[1])
-    todo_result = get(todo_url).json()
-    name_result = get(name_url).json()
+    url = "https://jsonplaceholder.typicode.com/"
+    user = requests.get(url + "user/{}".format(sys.argv[1])).json()
+    todos = requests.get(url + "todo", params={"userId": sys.argv[1]}).json()
 
-    todo_num = len(todo_result)
-    todo_complete = len([todo for todo in todo_result
-                         if todo.get("completed")])
-
-    name = name_result.get("name")
-    print("Employee {} is done with tasks({}/{}):"
-          .format(name, todo_complete, todo_num))
-    for todo in todo_result:
-        if (todo.get("completed")):
-            print("\t {}".format(todo.get('title')))
+    completed = [t.get("title") for t in todos if t.get("completed") is True]
+    print("Employee {} is done with task({}/{}):".format(
+        user.get("name"), len(completed), len(todos)))
+    [print("\t {}".format(c)) for c in completed]
