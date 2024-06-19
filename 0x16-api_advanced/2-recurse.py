@@ -3,41 +3,29 @@
 """  function that queries the Reddit API and returns
 a list containing the titles of all hot articles for
 a given subreddit. If no results are found for the
-given subreddit, the function should return None """
-
-from requests import get
+given subreddit, the function should return """
 
 
 def recurse(subreddit, hot_list=[], after=None):
     """ function that queries the Reddit API """
+    import requests
 
-    params = {'show': 'all'}
-
-    if subreddit is None or not isinstance(subreddit, str):
+    info = requests.get("https://www.reddit.com/r/{}/hot.json"
+                        .format(subreddit),
+                        params={"count": count, "after": after},
+                        headers={"User-Agent": "My-User-Agent"},
+                        allow_redirects=False)
+    if info.status_code >= 400:
         return None
 
-    user_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
+    hot_1 = hot_list + [child.get("data").get("title")
+                        for child in info.json()
+                        .get("data")
+                        .get("children")]
 
-    url = 'https://www.reddit.com/r/{}/hot/.json?after={}'.format(subreddit,
-                                                                  after)
+    inf = info.json()
+    if not inf.get("data").get("after"):
+        return hot_1
 
-    response = get(url, headers=user_agent, params=params)
-
-    if (response.status_code != 200):
-        return None
-
-    all_data = response.json()
-
-    try:
-        raw1 = all_data.get('data').get('children')
-        after = all_data.get('data').get('after')
-
-        if after is None:
-            return hot_list
-
-        for i in raw1:
-            hot_list.append(i.get('data').get('title'))
-
-        return recurse(subreddit, hot_list, after)
-    except:
-        print("None")
+    return recurse(subreddit, hot_1, inf.get("data").get("count"),
+                   inf.get("data").get("after"))
