@@ -8,7 +8,7 @@ given subreddit, the function should return """
 import requests
 
 
-def recurse(subreddit, hot_list=[], n=0, after=None):
+def recurse(subreddit, hot_list=[]):
     """ The Reddit API uses pagination
     for separating pages of responses """
 
