@@ -10,21 +10,14 @@ from requests import get
 def top_ten(subreddit):
     """ function that queries the Reddit API """
 
-    if subreddit is None or not isinstance(subreddit, str):
-        print("None")
+    import requests
 
-    user_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
-    params = {'limit': 10}
-    url = 'https://www.reddit.com/r/{}/hot/.json'.format(subreddit)
-
-    response = get(url, headers=user_agent, params=params)
-    all_data = response.json()
-
-    try:
-        raw1 = all_data.get('data').get('children')
-
-        for i in raw1:
-            print(i.get('data').get('title'))
-
-    except:
-        print("None")
+    info = requests.get("https://www.reddit.com/r/{}/hot.json?limit=10"
+                        .format(subreddit),
+                        headers={"User-Agent": "My-User-Agent"},
+                        allow_redirects=False)
+    if info.status_code >= 300:
+        print('None')
+    else:
+        [print(child.get("data").get("title"))
+         for child in info.json().get("data").get("children")]
