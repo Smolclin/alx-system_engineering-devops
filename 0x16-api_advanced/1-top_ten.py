@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """Importing requests module"""
 
-from requests import get
+import requests
 
 
-dfef top_ten(subreddit)
+def top_ten(subreddit)
 """Write a function that queries the Reddit API and
 prints the titles of the first 10 hot posts listed for a given subreddit"""
 
