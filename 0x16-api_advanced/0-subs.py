@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ import requests modules """
 
-from requests import get
+import requests
 
 
 def number_of_subscribers(subreddit):
@@ -10,16 +10,15 @@ def number_of_subscribers(subreddit):
     or a given subreddit. If an invalid subreddit is given,
     the function should return 0"""
 
-    if subreddit is None or not isinstance(subreddit, str):
-        return 0
+    headers = {'User-Agent': 'CustomClient/1.0'}
+    url = ("https://api.reddit.com/r/{}/about".format(subreddit))
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
-    user_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
-    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-    response = get(url, headers=user_agent)
-    all_data = response.json()
+    if response.status_code != 200:
+        return (0)
+    response = response.json()
+    if 'data' in response:
+        return (response.get('data').get(subscribers))
 
-    try:
-        return all_data.get('data').get('subscribers')
-
-    except:
-        return 0
+    else:
+        return (0)
