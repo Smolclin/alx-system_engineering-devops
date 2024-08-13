@@ -4,24 +4,23 @@
 import requests
 
 
-def top_ten(subreddit)
-"""Write a function that queries the Reddit API and
-prints the titles of the first 10 hot posts listed for a given subreddit"""
+def top_ten(subreddit):
+    """Write a function that queries the Reddit API and
+    prints the titles of the first 10 hot posts
+    listed for a given subreddit"""
 
-if subreddit is None or not isinstance(subreddit, str):
-    print("None")
 
-    user_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
-    params = {'limit': 10}
-    url = 'https://www.reddit.com/r/{}/hot/.json'.format(subreddit)
-    response = get(url, headers=user_agent, params=params)
-    all_data = response.json()
+    url = ("https://api.reddit.com/r/{}?sort=hot&limit=10".format(subreddit))
+    headers = {'User-Agent': 'CustomClient/1.0'}
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
-    try:
-        raw1 = all_data.get('data').get('children')
+    if response.status_code != 200:
+        print(None)
+        return
+    response = response.json()
+    if 'data' in response:
+        for posts in response.get('data').get('children'):
+            print(posts.get('data').get('title'))
 
-        for i in raw1:
-            print(i.get('data').get('title'))
-
-    except:
-        print("None")
+    else:
+        print(None)
