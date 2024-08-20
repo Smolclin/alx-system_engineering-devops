@@ -6,7 +6,8 @@ Web Server
 Server
 Web stack debugging
 
-https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/9/c7d1ed0a2e10d1b4e9b3.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240819%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240819T151850Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=4aca10328e4f35ad61f40f840c19a88978e9a4b2b82a8661b6f4b63f3867b563
+![image](https://github.com/user-attachments/assets/b78f0196-34a1-48c3-bc21-807ea68b08f2)
+
 
 Background Context
 
