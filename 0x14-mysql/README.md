@@ -6,6 +6,7 @@ For this project, we expect you to look at these concepts:
 [How to : ] Fresh Reset and Install mysql 5.7
 Database administration
 Web stack debugging
+![image](https://github.com/user-attachments/assets/11fae4e4-272c-47de-8763-e2395adee488)
 
 
 Resources
