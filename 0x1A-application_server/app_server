@@ -1,43 +1,43 @@
-echo "Update Packages and Installing Requirements"
+echo "Updating Packages and Installing Requirements"
 
-#Update packages
+# Update Package Manager
 sudo apt-get update
 sudo apt-get install -y nginx
-#installing pip
+# Install pip
 sudo apt-get install -y python3-pip
-#installing Flask, Flask_cors, sqlalchemy using pip
+# Install Flask, flask_cors, sqlalchemy Using PIP
 pip install flask
 pip install flask_cors
 pip install sqlalchemy
-#installing net-tools
+# Install net-tools
 sudo apt install -y net-tools
-#install GUNICORN
+# Install GUNICORN
 sudo apt-get install -y gunicorn
-#remove curent AirBnB repo
+# Remove any current AIRBNB Repositoty
 rm -rf AirBnB_clone_v*
-#cloning my repo
-git clone git@github.com:Smolclin/AirBnB_clone_v2.git
-git clone git@github.com:Smolclin/AirBnB_clone_v3.git
-git clone git@github.com:Smolclin/AirBnB_clone_v4.git
-#changing directory
+# Clone My Repository
+git clone https://github.com/hardope/AirBnB_clone_v2
+git clone https://github.com/hardope/AirBnB_clone_v3
+git clone https://github.com/hardope/AirBnB_clone_v4
+# Change Directory
 cd AirBnB_clone_v2
-#switching branch
-git checkout app.server
+# Switch Branches
+git checkout app-server
 
-#defining the path to nginx configuration file to be overwritten
+# Define the path to the Nginx configuration file to be overwritten
 NGINX_CONFIG="/etc/nginx/sites-enabled/default"
 
-#overwriting nginx configuration file with the provided configuration
+# Overwrite the Nginx configuration file with the provided configuration
 sudo tee "$NGINX_CONFIG" > /dev/null <<EOF
 server {
     listen 80 default_server;
 
-    listen [::]:80 default_server
+    listen [::]:80 default_server;
     root /var/www/html;
-    index index.html index.html index.nginx-debian.html
+    index index.html index.htm index.nginx-debian.html;
     server_name _;
     add_header X-Served-By \$hostname;
-    location hbnb_static {
+    location /hbnb_static { 
 	alias /data/web_static/current/;
     }
     location /static/ {
@@ -53,7 +53,7 @@ server {
     location ~ ^/airbnb-dynamic/number_odd_or_even/([0-9]+)$ {
 	proxy_pass http://0.0.0.0:5001/number_odd_or_even/\$1;
     }
-    location/api/ {
+    location /api/ {
 	proxy_pass http://0.0.0.0:5002;
     }
     if (\$request_filename ~ redirect_me){
@@ -66,18 +66,17 @@ server {
 }
 EOF
 
-#Restarting nginx to apply the changes
+# Restart Nginx to apply the changes
 sudo systemctl restart nginx
 
 echo "Nginx configuration has been successfully updated."
 
-#setting up tmux session for task 4
+# Setup tmux session for task 4 
 cd /home/ubuntu/AirBnB_clone_v3
 tmux new-session -d 'gunicorn --bind 0.0.0.0:5002 api.v1.app:app'
 
-#setting up tmux session for task 5
+# Setup tmux session for task 5
 cd /home/ubuntu/AirBnB_clone_v4
 git checkout app-server
 
 echo "Done !!!!"
-"app_server" 82L, 2215C
