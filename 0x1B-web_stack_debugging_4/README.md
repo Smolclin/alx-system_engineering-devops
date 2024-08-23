@@ -1,5 +1,8 @@
 0x1B. Web stack debugging #4
 
+![image](https://github.com/user-attachments/assets/026d2d7e-1a6a-42ed-8511-d43ff7fbc040)
+
+
 Requirements
 General
 All your files will be interpreted on Ubuntu 14.04 LTS
