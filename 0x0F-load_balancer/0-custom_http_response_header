@@ -1,31 +1,35 @@
 #!/usr/bin/env bash
-# Script to configure a brand new ubuntu machine
+# Script to configure a brand new Ubuntu machine
 
-apt-get update
-apt-get install -y nginx
+# Update and install Nginx
+sudo apt-get -y update
+sudo apt-get -y install nginx
 
-mkdir /etc/nginx/html
-touch /etc/nginx/html/index.html
-echo "Hello World" > /etc/nginx/html/index.html
-touch /etc/nginx/html/404.html
-echo "Cecl n'est pas une page" > /etc/nginx/html/404.html
+sudo mkdir /etc/nginx/html
+sudo touch /var/www/html/index.html
+echo "Hello World" | sudo tee /var/www/html/index.html
+sudo touch /var/www/html/404.html
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
-printf %s "server {
+# Configure Nginx
+sudo bash -c "cat > /etc/nginx/sites-available/default" <<EOF
+server {
     listen 80;
     listen [::]:80 default_server;
-    add_header X-served-By $HOSTNAME
-    root   /etc/nginx/html;
-    index  index.html index.html;
+    add_header X-served-By \$HOSTNAME;
+    root /var/www/html;
+    index index.html;
 
-    location redirect_me {
+    location /redirect_me {
         return 301 http://cuberule.com/;
     }
 
     error_page 404 /404.html;
-    location /404 {
-    root /etc/nginx/html;
-    internal;
+    location = /404.html {
+        internal;
     }
-}" > /etc/nginx/sites-available/default
+}
+EOF
 
-service nginx restart
+# Restarting Nginx
+sudo systemctl restart nginx
